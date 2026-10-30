@@ -36,15 +36,6 @@ class Config:
     max_depth: int
     filter_substring: str
 
-    def as_pairs(self):
-        """Вернуть параметры списком пар (ключ, строковое значение)."""
-        pairs = []
-        for name, value in vars(self).items():
-            if isinstance(value, bool):
-                value = "true" if value else "false"
-            pairs.append((name, str(value)))
-        return pairs
-
 
 def parse_package_name(raw):
     """Проверить имя анализируемого пакета."""
