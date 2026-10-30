@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <package_name>busybox</package_name>
+    <package_name>musl</package_name>
+    <colour>red</colour>
+    <max_depth><value>3</value></max_depth>
+</config>

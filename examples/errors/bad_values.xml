@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <package_name>-bad name</package_name>
+    <repository></repository>
+    <test_repo_mode>maybe</test_repo_mode>
+    <ascii_tree>2</ascii_tree>
+    <max_depth>zero</max_depth>
+    <filter_substring>a b</filter_substring>
+</config>
