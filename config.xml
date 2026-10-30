@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <package_name>busybox</package_name>
+    <repository>https://dl-cdn.alpinelinux.org/alpine/v3.20/main/x86_64</repository>
+    <test_repo_mode>false</test_repo_mode>
+    <ascii_tree>true</ascii_tree>
+    <max_depth>3</max_depth>
+    <filter_substring>doc</filter_substring>
+</config>

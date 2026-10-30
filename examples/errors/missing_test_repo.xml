@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <package_name>A</package_name>
+    <repository>no_such_file.txt</repository>
+    <test_repo_mode>true</test_repo_mode>
+    <ascii_tree>false</ascii_tree>
+    <max_depth>2</max_depth>
+</config>
