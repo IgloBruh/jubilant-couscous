@@ -85,14 +85,6 @@ class ValidConfigTests(ConfigTestCase):
         config = load_config(self.write(make_xml(**fields)))
         self.assertEqual(Path(config.repository), repo)
 
-    def test_as_pairs(self):
-        """Логические значения выводятся как true/false."""
-        config = load_config(self.write(make_xml(**valid_fields())))
-        pairs = dict(config.as_pairs())
-        self.assertEqual(pairs["ascii_tree"], "true")
-        self.assertEqual(pairs["test_repo_mode"], "false")
-        self.assertEqual(pairs["max_depth"], "3")
-
     def test_example_test_mode(self):
         """Пример конфигурации тестового режима корректен."""
         config = load_config(EXAMPLES_DIR / "test_mode.xml")

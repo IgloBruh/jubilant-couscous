@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <package_name>Z</package_name>
+    <repository>../test_repo.txt</repository>
+    <test_repo_mode>true</test_repo_mode>
+    <ascii_tree>false</ascii_tree>
+    <max_depth>3</max_depth>
+</config>
