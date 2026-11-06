@@ -35,7 +35,6 @@ class Config:
     ascii_tree: bool
     max_depth: int
     filter_substring: str
-    load_order: bool
 
 
 def parse_package_name(raw):
@@ -99,7 +98,6 @@ FIELDS = {
     "ascii_tree": (parse_bool, REQUIRED),
     "max_depth": (parse_max_depth, REQUIRED),
     "filter_substring": (parse_filter_substring, ""),
-    "load_order": (parse_bool, False),
 }
 
 

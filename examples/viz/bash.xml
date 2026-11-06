@@ -3,7 +3,6 @@
     <package_name>bash</package_name>
     <repository>https://dl-cdn.alpinelinux.org/alpine/v3.20/main/x86_64</repository>
     <test_repo_mode>false</test_repo_mode>
-    <ascii_tree>false</ascii_tree>
+    <ascii_tree>true</ascii_tree>
     <max_depth>10</max_depth>
-    <load_order>true</load_order>
 </config>

@@ -5,10 +5,10 @@ import sys
 
 from depviz.apkindex import PackageNotFoundError
 from depviz.config import ConfigError, load_config
+from depviz.d2 import to_d2
 from depviz.graph import build_graph
-from depviz.order import load_order
-from depviz.render import format_graph, format_load_order
 from depviz.repository import RepositoryError, open_repository
+from depviz.tree import ascii_tree
 
 DEFAULT_CONFIG = "config.xml"
 EXIT_OK = 0
@@ -54,8 +54,8 @@ def main(argv=None):
     except PackageNotFoundError as exc:
         report_error("Ошибка", [str(exc)])
         return EXIT_PACKAGE_NOT_FOUND
-    print(format_graph(graph, config))
-    if config.load_order:
+    print(to_d2(graph, config))
+    if config.ascii_tree:
         print()
-        print(format_load_order(graph, load_order(graph)))
+        print(ascii_tree(graph, config.max_depth))
     return EXIT_OK
