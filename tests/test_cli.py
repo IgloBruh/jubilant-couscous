@@ -27,15 +27,25 @@ def run_cli(config_path):
 class CliTests(unittest.TestCase):
     """Проверка вывода и кодов завершения."""
 
-    def test_prints_direct_dependencies(self):
-        """Выводятся прямые зависимости пакета из тестового репозитория."""
+    def test_prints_graph(self):
+        """Выводится граф зависимостей тестового репозитория."""
         code, out, err = run_cli(EXAMPLES_DIR / "test_mode.xml")
         self.assertEqual(code, EXIT_OK)
         self.assertEqual(err, "")
-        lines = out.splitlines()
-        self.assertEqual(lines[0], "Пакет: A")
-        self.assertIn("(2)", lines[1])
-        self.assertEqual([line.strip() for line in lines[2:]], ["B", "C"])
+        lines = [line.strip() for line in out.splitlines()]
+        self.assertEqual(lines[0], "Граф зависимостей пакета A")
+        self.assertIn("Пакетов: 5, связей: 6", lines)
+        self.assertIn("C -> D, E", lines)
+        self.assertIn("Циклические зависимости (1):", lines)
+        self.assertEqual(lines[-1], "E -> A")
+
+    def test_all_cases(self):
+        """Все демонстрационные конфигурации выполняются успешно."""
+        for path in sorted((EXAMPLES_DIR / "cases").glob("*.xml")):
+            with self.subTest(case=path.name):
+                code, out, _ = run_cli(path)
+                self.assertEqual(code, EXIT_OK)
+                self.assertIn("Граф зависимостей", out)
 
     def test_config_error(self):
         """Ошибки конфигурации выводятся в stderr."""
