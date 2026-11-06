@@ -27,32 +27,23 @@ def run_cli(config_path):
 class CliTests(unittest.TestCase):
     """Проверка вывода и кодов завершения."""
 
-    def test_prints_graph(self):
-        """Выводится граф зависимостей тестового репозитория."""
+    def test_prints_d2_and_tree(self):
+        """Выводится описание на D2 и, если включено, ASCII-дерево."""
         code, out, err = run_cli(EXAMPLES_DIR / "test_mode.xml")
         self.assertEqual(code, EXIT_OK)
         self.assertEqual(err, "")
-        lines = [line.strip() for line in out.splitlines()]
-        self.assertEqual(lines[0], "Граф зависимостей пакета A")
-        self.assertIn("Пакетов: 5, связей: 6", lines)
-        self.assertIn("C -> D, E", lines)
-        self.assertIn("Циклические зависимости (1):", lines)
-        self.assertEqual(lines[-1], "E -> A")
+        d2_part, _, tree_part = out.rstrip().rpartition("\n\n")
+        self.assertIn("# Граф зависимостей пакета A", d2_part)
+        self.assertIn('"C" -> "E"', d2_part)
+        self.assertIn('"E" -> "A": {', d2_part)
+        self.assertEqual(tree_part.splitlines()[0], "A")
+        self.assertIn("A (цикл)", tree_part)
 
-    def test_load_order(self):
-        """В режиме load_order выводится порядок загрузки."""
-        code, out, _ = run_cli(EXAMPLES_DIR / "order" / "diamond.xml")
-        self.assertEqual(code, EXIT_OK)
-        lines = [line.strip() for line in out.splitlines()]
-        start = lines.index("Порядок загрузки пакета A (4):") + 1
-        self.assertEqual(
-            lines[start:], ["1. D", "2. B", "3. C", "4. A"]
-        )
-
-    def test_no_load_order_by_default(self):
-        """Без параметра load_order порядок не выводится."""
+    def test_no_tree_by_default(self):
+        """При ascii_tree=false дерево не выводится."""
         _, out, _ = run_cli(EXAMPLES_DIR / "cases" / "diamond.xml")
-        self.assertNotIn("Порядок загрузки", out)
+        self.assertNotIn("└──", out)
+        self.assertIn('"A" -> "B"', out)
 
     def test_all_cases(self):
         """Все демонстрационные конфигурации выполняются успешно."""
@@ -60,7 +51,7 @@ class CliTests(unittest.TestCase):
             with self.subTest(case=path.name):
                 code, out, _ = run_cli(path)
                 self.assertEqual(code, EXIT_OK)
-                self.assertIn("Граф зависимостей", out)
+                self.assertIn("direction: down", out)
 
     def test_config_error(self):
         """Ошибки конфигурации выводятся в stderr."""
