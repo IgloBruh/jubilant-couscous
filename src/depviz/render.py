@@ -40,3 +40,21 @@ def format_graph(graph, config):
     lines += format_section("Исключены фильтром", sorted(graph.filtered))
     lines += format_section("Не найдены в репозитории", sorted(graph.missing))
     return "\n".join(lines)
+
+
+def format_load_order(graph, order):
+    """Сформировать отчёт о порядке загрузки зависимостей."""
+    lines = [f"Порядок загрузки пакета {graph.root} ({len(order)}):"]
+    lines += [f"  {number}. {name}"
+              for number, name in enumerate(order, start=1)]
+    cycles = [f"{source}{EDGE_ARROW}{target}"
+              for source, target in graph.cycles]
+    lines += format_section("Для порядка разорваны циклические связи", cycles)
+    lines += format_section(
+        "Зависимости не учтены из-за ограничения глубины",
+        sorted(graph.truncated),
+    )
+    lines += format_section(
+        "Нет в репозитории, загрузить нельзя", sorted(graph.missing)
+    )
+    return "\n".join(lines)

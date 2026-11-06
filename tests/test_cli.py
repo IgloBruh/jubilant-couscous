@@ -39,6 +39,21 @@ class CliTests(unittest.TestCase):
         self.assertIn("Циклические зависимости (1):", lines)
         self.assertEqual(lines[-1], "E -> A")
 
+    def test_load_order(self):
+        """В режиме load_order выводится порядок загрузки."""
+        code, out, _ = run_cli(EXAMPLES_DIR / "order" / "diamond.xml")
+        self.assertEqual(code, EXIT_OK)
+        lines = [line.strip() for line in out.splitlines()]
+        start = lines.index("Порядок загрузки пакета A (4):") + 1
+        self.assertEqual(
+            lines[start:], ["1. D", "2. B", "3. C", "4. A"]
+        )
+
+    def test_no_load_order_by_default(self):
+        """Без параметра load_order порядок не выводится."""
+        _, out, _ = run_cli(EXAMPLES_DIR / "cases" / "diamond.xml")
+        self.assertNotIn("Порядок загрузки", out)
+
     def test_all_cases(self):
         """Все демонстрационные конфигурации выполняются успешно."""
         for path in sorted((EXAMPLES_DIR / "cases").glob("*.xml")):

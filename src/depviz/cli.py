@@ -6,7 +6,8 @@ import sys
 from depviz.apkindex import PackageNotFoundError
 from depviz.config import ConfigError, load_config
 from depviz.graph import build_graph
-from depviz.render import format_graph
+from depviz.order import load_order
+from depviz.render import format_graph, format_load_order
 from depviz.repository import RepositoryError, open_repository
 
 DEFAULT_CONFIG = "config.xml"
@@ -54,4 +55,7 @@ def main(argv=None):
         report_error("Ошибка", [str(exc)])
         return EXIT_PACKAGE_NOT_FOUND
     print(format_graph(graph, config))
+    if config.load_order:
+        print()
+        print(format_load_order(graph, load_order(graph)))
     return EXIT_OK

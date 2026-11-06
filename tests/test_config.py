@@ -78,6 +78,13 @@ class ValidConfigTests(ConfigTestCase):
         config = load_config(self.write(make_xml(**fields)))
         self.assertEqual(config.filter_substring, "")
 
+    def test_load_order_optional(self):
+        """Режим порядка загрузки по умолчанию выключен."""
+        config = load_config(self.write(make_xml(**valid_fields())))
+        self.assertFalse(config.load_order)
+        fields = valid_fields(load_order="true")
+        self.assertTrue(load_config(self.write(make_xml(**fields))).load_order)
+
     def test_test_mode_relative_path(self):
         """Путь к тестовому репозиторию отсчитывается от конфигурации."""
         repo = self.write("A: B\n", name="repo.txt")
@@ -154,6 +161,7 @@ class FieldErrorTests(ConfigTestCase):
         """Некорректные логические значения."""
         self.check_field("test_repo_mode", "maybe", "логическое")
         self.check_field("ascii_tree", "2", "логическое")
+        self.check_field("load_order", "sometimes", "логическое")
 
     def test_max_depth(self):
         """Нечисловая глубина и глубина вне диапазона."""
