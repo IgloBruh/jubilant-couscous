@@ -53,7 +53,7 @@ class StripConstraintTests(unittest.TestCase):
 class ParseIndexTests(unittest.TestCase):
     """Разбор записей индекса."""
 
-    def setUp(self):
+    def set_up(self):
         """Разобрать пример индекса."""
         self.index = parse_index(SAMPLE_INDEX)
 
@@ -83,7 +83,7 @@ class ParseIndexTests(unittest.TestCase):
 class DirectDependenciesTests(unittest.TestCase):
     """Получение прямых зависимостей."""
 
-    def setUp(self):
+    def set_up(self):
         """Разобрать пример индекса."""
         self.index = parse_index(SAMPLE_INDEX)
 

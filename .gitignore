@@ -33,6 +33,9 @@ dist/
 *.swp
 *~
 
+# Личные заметки
+run_commands.txt
+
 # Файлы ОС
 .DS_Store
 Thumbs.db

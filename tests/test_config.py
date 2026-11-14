@@ -33,12 +33,12 @@ def valid_fields(**overrides):
 class ConfigTestCase(unittest.TestCase):
     """Базовый класс с временным каталогом для файлов конфигурации."""
 
-    def setUp(self):
+    def set_up(self):
         """Создать временный каталог."""
         self.tmp = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmp.name)
 
-    def tearDown(self):
+    def tear_down(self):
         """Удалить временный каталог."""
         self.tmp.cleanup()
 

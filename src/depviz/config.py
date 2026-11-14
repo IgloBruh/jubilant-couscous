@@ -1,7 +1,7 @@
 """Загрузка и проверка пользовательской конфигурации из XML-файла."""
 
 import re
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as et
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import urlparse
@@ -127,14 +127,14 @@ def check_repository(repository, test_mode, base_dir):
 def read_root(path):
     """Прочитать XML-файл и вернуть его корневой элемент."""
     try:
-        root = ET.parse(path).getroot()
+        root = et.parse(path).getroot()
     except FileNotFoundError:
         raise ConfigError([f"файл конфигурации не найден: {path}"]) from None
     except (IsADirectoryError, PermissionError) as exc:
         raise ConfigError(
             [f"не удалось прочитать файл конфигурации {path}: {exc}"]
         ) from None
-    except ET.ParseError as exc:
+    except et.ParseError as exc:
         raise ConfigError([f"некорректный XML в файле {path}: {exc}"]) from None
     if root.tag != ROOT_TAG:
         raise ConfigError(
